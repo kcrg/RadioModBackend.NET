@@ -2,8 +2,8 @@ name: Deploy .NET Application
 
 on:
   push:
-    branches:
-      - main
+    tags:
+      - 'v*'
 
 jobs:
   build:
@@ -28,22 +28,20 @@ jobs:
       uses: appleboy/scp-action@v0.1.7
       with:
         host: ${{ secrets.VPS_SSH_HOST }}
-        username: ${{ secrets.VPS_SSH_USERNAME }}
+        username: ${{ secrets.VPS_SSH_USERNAME2 }}
         key: ${{ secrets.VPS_SSH_PRIVATE_KEY }}
         port: ${{ secrets.VPS_SSH_PORT }}
         source: ./publish/RadioModBackend.NET
-        target: ${{ secrets.VPS_SSH_PATH }}
+        target: ${{ secrets.VPS_SSH_PATH2 }}
         strip_components: 2
 
     - name: Restart app via SSH
       uses: appleboy/ssh-action@v1.1.0
       with:
         host: ${{ secrets.VPS_SSH_HOST }}
-        username: ${{ secrets.VPS_SSH_USERNAME }}
+        username: ${{ secrets.VPS_SSH_USERNAME2 }}
         key: ${{ secrets.VPS_SSH_PRIVATE_KEY }}
         port: ${{ secrets.VPS_SSH_PORT }}
-        script: |
-          scp -r ${{ secrets.VPS_SSH_PATH }}* ${{ secrets.SSH_PATH }}:~/
-          ssh ${{ secrets.SSH_PATH }} "chmod +x ~/RadioModBackend.NET; ~/radiomod.sh restart"
+        script: ssh ${{ secrets.VPS_SSH_PATH2 }} "chmod +x ~/RadioModBackend.NET; ~/radiomod.sh restart"
       
 
