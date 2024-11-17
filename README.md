@@ -79,7 +79,7 @@ Create an `appsettings.json` file in the root directory with the following conte
 ```json
 {
   "RadioMod": {
-    "Endpoint": "http://yourdomain.com",
+    "Endpoint": "http://yourdomainorip.com",
     "Port": "3045",
     "EnableWebhookOnQueue": true,
     "MaxSearchCount": 15,
