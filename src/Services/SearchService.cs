@@ -5,20 +5,25 @@ using YoutubeExplode.Common;
 
 namespace RadioModBackend.NET.Services;
 
-public class SearchService(YoutubeClient youtubeClient, AppSettings appSettings)
+public class SearchService(YoutubeClient youtubeClient, AppSettings appSettings, ILogger<SearchService> logger)
 {
     public async Task<List<SearchResult>> SearchAsync(string query)
     {
+        logger.LogInformation("Initiating search with query: {Query}", query);
         List<SearchResult> searchResults = new(appSettings.MaxSearchCount);
 
         try
         {
+            logger.LogDebug("Fetching videos for query: {Query}", query);
             var searchResponse = await youtubeClient.Search.GetVideosAsync(query).CollectAsync(appSettings.MaxSearchCount);
+
+            logger.LogInformation("Fetched {Count} videos for query: {Query}", searchResponse.Count, query);
 
             foreach (var video in searchResponse)
             {
                 if (video.Duration == null || video.Duration.Value.TotalSeconds <= 0 || video.Duration.Value.TotalSeconds >= 600)
                 {
+                    logger.LogDebug("Skipping video {VideoId} due to invalid duration: {Duration} seconds", video.Id, video.Duration?.TotalSeconds);
                     continue;
                 }
 
@@ -33,10 +38,13 @@ public class SearchService(YoutubeClient youtubeClient, AppSettings appSettings)
                     Seconds = (int?)video?.Duration.Value.TotalSeconds
                 };
                 searchResults.Add(result);
+                logger.LogDebug("Added video {VideoId} to search results", video?.Id);
             }
         }
-        catch
+        catch (Exception ex)
         {
+            logger.LogError(ex, "An error occurred during search operation for query: {Query}", query);
+
             searchResults.Add(new SearchResult
             {
                 Id = "tkzY_VwNIek",
@@ -47,10 +55,12 @@ public class SearchService(YoutubeClient youtubeClient, AppSettings appSettings)
                 Views = "22M",
                 Seconds = 128
             });
+            logger.LogInformation("Added default search result due to error");
         }
 
         if (searchResults.Count == 0)
         {
+            logger.LogWarning("No valid search results found for query: {Query}. Adding default search result.", query);
             searchResults.Add(new SearchResult
             {
                 Id = "tkzY_VwNIek",
@@ -63,6 +73,7 @@ public class SearchService(YoutubeClient youtubeClient, AppSettings appSettings)
             });
         }
 
+        logger.LogInformation("Search operation completed for query: {Query}. Total results: {Count}", query, searchResults.Count);
         return searchResults;
     }
 }
