@@ -1,0 +1,28 @@
+@RadioModBackend_HostAddress = http://localhost:3045
+
+POST {{RadioModBackend_HostAddress}}/search
+Content-Type: application/json
+
+{
+  "searchString": "Ocean Man"
+}
+
+### Queue Endpoint
+
+POST {{RadioModBackend_HostAddress}}/queue
+Content-Type: application/json
+
+{
+  "videoId": "tkzY_VwNIek",
+  "videoTitle": "Ween - Ocean Man",
+  "server": "Test Server",
+  "playfabId": "testPlayfabId",
+  "playerName": "TestPlayer",
+  "serverWebhook": "https://discord.com/api/webhooks/1145714268734509058/tm_ofv2r0BLPZlUZG1qfZWR00zuv76r_1NqGKQ40UE_RoPdfzM5r3SLCuhnqQHmZZ7Xc"
+}
+
+### Playlist Endpoint
+
+POST {{RadioModBackend_HostAddress}}/playlist
+Content-Type: application/json
+playlistId: PLi0mNC3SNQe129kBUp3Y6V50W52XBS97j
