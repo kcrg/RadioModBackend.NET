@@ -1,4 +1,4 @@
-name: Deploy .NET Application
+name: Deploy .NET Application to VPS
 
 on:
   push:
