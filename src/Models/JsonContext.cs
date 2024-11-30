@@ -1,7 +1,6 @@
-﻿using RadioModBackend.NET.Models;
-using System.Text.Json.Serialization;
+﻿using System.Text.Json.Serialization;
 
-namespace RadioModBackend.AOT.Models;
+namespace RadioModBackend.NET.Models;
 
 [JsonSerializable(typeof(DiscordMessage))]
 [JsonSerializable(typeof(DiscordEmbed))]
