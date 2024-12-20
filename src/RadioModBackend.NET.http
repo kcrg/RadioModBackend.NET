@@ -13,12 +13,12 @@ POST {{RadioModBackend_HostAddress}}/queue
 Content-Type: application/json
 
 {
-  "videoId": "tkzY_VwNIek",
+  "videoId": "XJOex1-upLo",
   "videoTitle": "Ween - Ocean Man",
   "server": "Test Server",
   "playfabId": "testPlayfabId",
   "playerName": "TestPlayer",
-  "serverWebhook": "https://discord.com/api/webhooks/1145714268734509058/tm_ofv2r0BLPZlUZG1qfZWR00zuv76r_1NqGKQ40UE_RoPdfzM5r3SLCuhnqQHmZZ7Xc"
+  "serverWebhook": ""
 }
 
 ### Playlist Endpoint

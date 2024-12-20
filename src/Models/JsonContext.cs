@@ -13,4 +13,7 @@ namespace RadioModBackend.NET.Models;
 [JsonSerializable(typeof(QueueResponse))]
 [JsonSerializable(typeof(SearchResponse))]
 [JsonSerializable(typeof(PlaylistResponse))]
+
+[JsonSerializable(typeof(YtDlpSearchResult))]
+[JsonSerializable(typeof(List<YtDlpSearchResult>))]
 public partial class JsonContext : JsonSerializerContext;
