@@ -5,7 +5,7 @@ An alternative API backend for [RadioMod for Mordhau](https://github.com/TheSalt
 ## Features
 
 - **Standalone Executable**: Built with Native AOT, optimized for size or speed - no runtime installation required.
-- **YouTube Integration**: Utilizes `YoutubeExplode` for seamless YouTube API interactions.
+- **YouTube Integration**: Utilizes `YoutubeExplode` for seamless YouTube API interactions. Falls back to `yt-dlp` if needed.
 - **Output Caching**: Implements `OutputCache` for efficient response caching.
 - **Configurable**: Easy setup using a straightforward `appsettings.json` file.
 - **Discord Webhook Support**: Optionally send notifications via Discord when a queue action occurs.
@@ -14,6 +14,7 @@ An alternative API backend for [RadioMod for Mordhau](https://github.com/TheSalt
 ## Table of Contents
 
 - [Prerequisites](#prerequisites)
+- [yt-dlp Requirements](#yt-dlp-requirements)
 - [Installation](#installation)
   - [Download Pre-built Executable](#download-pre-built-executable)
   - [Build from Source](#build-from-source)
@@ -32,6 +33,14 @@ An alternative API backend for [RadioMod for Mordhau](https://github.com/TheSalt
 
 - **Operating System**: Windows, Linux, or macOS.
 - **.NET 9 SDK** (required only if building from source).
+
+## yt-dlp Requirements
+
+If `YoutubeExplode` fails, you must have `yt-dlp` installed and accessible on your system's `PATH`. For Linux, for example, you could install it via `apt`:
+
+```bash
+sudo apt install yt-dlp
+```
 
 ## Installation
 
@@ -295,7 +304,5 @@ Contributions are welcome! Please feel free to open an issue or submit a pull re
 ## License
 
 This project is licensed under the [MIT License](LICENSE).
-
----
 
 **Disclaimer**: This project is a work in progress and is not affiliated with the original RadioMod or Mordhau developers.
