@@ -71,7 +71,10 @@ public class DownloadService(YoutubeClient youtubeClient, HttpClient httpClient,
                 string fileName = $"{videoId}.webm";
                 string filePath = Path.Combine("cache", fileName);
 
-                var ytDlpArgs = $"-f bestaudio/webm --output \"cache/%(id)s.%(ext)s\" \"https://www.youtube.com/watch?v={videoId}\"";
+                const string poToken = "MpQBVIMwe2IgAD5UuyPg1C3R-8K4yCV9Qu1mzDw_3QCtBo5A_a4o4U3FD0jSuvBGVlar41bIKvHpT9bThtJ_MgY4fc361PmO5Ud7D5BNVT3ocg2cbDhfGWPykxyiKcu6tksEmVVg0U2m2X1YPx2xvUxBnHtDk7DBbj6VBBQshxkxzBTosihvOzWRtrMB8b0yHE1udbhKpQ==";
+                const string visitorData = "CgtCbF80UDlNM3dGNCig-pa7BjIiCgJQTBIcEhgSFhMLFBUWFwwYGRobHB0eHw4PIBAREiEgGw%3D%3D";
+
+                var ytDlpArgs = $"--cookies cookie.txt --extractor-arg \"youtube:player_client=web;po_token=web+{poToken};visitor_data={visitorData};player_skip=webpage,configs\" -f bestaudio/webm --output \"cache/%(id)s.%(ext)s\" \"https://www.youtube.com/watch?v={videoId}\"";
 
                 logger.LogInformation("Attempting to download VideoId: {VideoId} using yt-dlp with args: {Args}", videoId, ytDlpArgs);
 
