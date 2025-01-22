@@ -40,8 +40,9 @@ public class Startup
         builder.Services.AddOutputCache(options =>
         {
             options.AddBasePolicy(builder => builder
-                .Expire(TimeSpan.FromDays(30)));
+                .Expire(TimeSpan.FromDays(60)));
             options.AddPolicy("Default", CustomCachePolicy.Instance);
+            options.SizeLimit = 250_000_000; // 2GB
         });
 
         // Build the app
