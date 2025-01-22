@@ -37,8 +37,8 @@ public class SearchService(YoutubeClient youtubeClient, AppSettings appSettings,
                     Title = video.Title,
                     Timestamp = video.Duration!.Value.TotalSeconds.ToTimestampString(),
                     Author = video.Author.ChannelTitle,
-                    Ago = video.SimpleUploadDate ?? "No upload date",
-                    Views = video.ViewCount.ToCompactNumberString(),
+                    Ago = "No upload date", //video.SimpleUploadDate ?? "No upload date",
+                    Views = "No view count", //video.ViewCount.ToCompactNumberString(),
                     Seconds = (int?)video.Duration.Value.TotalSeconds
                 };
                 searchResults.Add(result);

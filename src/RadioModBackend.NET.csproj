@@ -17,16 +17,16 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="AngleSharp" Version="1.1.2" />
-    <PackageReference Include="System.Text.Encoding.CodePages" Version="9.0.0" />
-    <!--<PackageReference Include="YoutubeExplode" Version="6.4.3" />-->
+    <PackageReference Include="AngleSharp" Version="1.2.0" />
+    <PackageReference Include="System.Text.Encoding.CodePages" Version="9.0.1" />
+    <PackageReference Include="YoutubeExplode" Version="6.5.1" />
   </ItemGroup>
 
-  <ItemGroup>
+  <!--<ItemGroup>
     <Reference Include="YoutubeExplode">
       <HintPath>..\external\YoutubeExplode.dll</HintPath>
     </Reference>
-  </ItemGroup>
+  </ItemGroup>-->
 
   <ItemGroup>
     <Folder Include="cache\" />
