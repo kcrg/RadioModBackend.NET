@@ -64,45 +64,18 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-nuget-
 
-      - name: Install cross-compilation tools (Linux)
-        if: runner.os == 'Linux' && (matrix.rid == 'linux-arm' || matrix.rid == 'linux-arm64')
+      - name: Install cross-compilation tools (Linux ARM64)
+        if: runner.os == 'Linux' && matrix.rid == 'linux-arm64'
         run: |
+          sudo dpkg --add-architecture arm64
           sudo apt-get update
-          if [ "${{ matrix.rid }}" == "linux-arm" ]; then
-            # Add armhf architecture
-            sudo dpkg --add-architecture armhf
-
-            # Update repositories
-            sudo sed -i -e 's/deb http/deb [arch=amd64] http/g' /etc/apt/sources.list
-            sudo sed -i -e 's/deb mirror/deb [arch=amd64] mirror/g' /etc/apt/sources.list
-
-            # Add armhf repositories
-            echo "deb [arch=armhf] http://ports.ubuntu.com/ubuntu-ports/ jammy main restricted universe multiverse" | sudo tee /etc/apt/sources.list.d/armhf.list
-            echo "deb [arch=armhf] http://ports.ubuntu.com/ubuntu-ports/ jammy-updates main restricted universe multiverse" | sudo tee -a /etc/apt/sources.list.d/armhf.list
-            echo "deb [arch=armhf] http://ports.ubuntu.com/ubuntu-ports/ jammy-backports main restricted universe multiverse" | sudo tee -a /etc/apt/sources.list.d/armhf.list
-            echo "deb [arch=armhf] http://ports.ubuntu.com/ubuntu-ports/ jammy-security main restricted universe multiverse" | sudo tee -a /etc/apt/sources.list.d/armhf.list
-
-            sudo apt-get update
-            sudo apt-get install -y clang llvm binutils-arm-linux-gnueabihf gcc-arm-linux-gnueabihf zlib1g-dev:armhf
-
-          elif [ "${{ matrix.rid }}" == "linux-arm64" ]; then
-            # Add arm64 architecture
-            sudo dpkg --add-architecture arm64
-
-            # Update repositories
-            sudo sed -i -e 's/deb http/deb [arch=amd64] http/g' /etc/apt/sources.list
-            sudo sed -i -e 's/deb mirror/deb [arch=amd64] mirror/g' /etc/apt/sources.list
-
-            # Add arm64 repositories
-            echo "deb [arch=arm64] http://ports.ubuntu.com/ubuntu-ports/ jammy main restricted universe multiverse" | sudo tee /etc/apt/sources.list.d/arm64.list
-            echo "deb [arch=arm64] http://ports.ubuntu.com/ubuntu-ports/ jammy-updates main restricted universe multiverse" | sudo tee -a /etc/apt/sources.list.d/arm64.list
-            echo "deb [arch=arm64] http://ports.ubuntu.com/ubuntu-ports/ jammy-backports main restricted universe multiverse" | sudo tee -a /etc/apt/sources.list.d/arm64.list
-            echo "deb [arch=arm64] http://ports.ubuntu.com/ubuntu-ports/ jammy-security main restricted universe multiverse" | sudo tee -a /etc/apt/sources.list.d/arm64.list
-
-            sudo apt-get update
-            sudo apt-get install -y clang llvm binutils-aarch64-linux-gnu gcc-aarch64-linux-gnu zlib1g-dev:arm64
-          fi
-
+          sudo apt-get install -y \
+            clang lld llvm \
+            gcc-aarch64-linux-gnu g++-aarch64-linux-gnu \
+            binutils-aarch64-linux-gnu \
+            libc6-dev-arm64-cross \
+            zlib1g-dev:arm64
+            
       - name: Publish
         run: dotnet publish src/RadioModBackend.NET.csproj --configuration Release --runtime ${{ matrix.rid }} --output publish/${{ matrix.rid }}-${{ matrix.optimization }} --verbosity minimal /p:OptimizationPreference=${{ matrix.optimization }} /p:SelfContained=true /p:DebugType=None
 
