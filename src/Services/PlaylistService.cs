@@ -21,7 +21,7 @@ public class PlaylistService(YoutubeClient youtubeClient, ILogger<PlaylistServic
             var videos = await youtubeClient.Playlists.GetVideosAsync(playlistId);
             logger.LogInformation("Retrieved {VideoCount} videos for playlist ID: {PlaylistId}", videos.Count, playlistId);
 
-            var results = new List<SearchResult>();
+            List<SearchResult> results = [];
 
             foreach (var video in videos)
             {

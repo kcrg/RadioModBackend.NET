@@ -1,8 +1,9 @@
-﻿using System.Diagnostics;
+﻿using RadioModBackend.NET.Helpers;
+using RadioModBackend.NET.Models;
+using System.Diagnostics;
+using System.IO;
 using System.Runtime.InteropServices;
 using System.Text.Json;
-using RadioModBackend.NET.Helpers;
-using RadioModBackend.NET.Models;
 using YoutubeExplode;
 using YoutubeExplode.Common;
 
@@ -83,9 +84,9 @@ public class SearchService(YoutubeClient youtubeClient, AppSettings appSettings,
                     await using (var fileStream = File.Create(resultsFilePath))
                     await using (var writer = new StreamWriter(fileStream))
                     {
-                        while (!process.StandardOutput.EndOfStream)
+                        string? line;
+                        while ((line = await process.StandardOutput.ReadLineAsync()) is not null)
                         {
-                            var line = await process.StandardOutput.ReadLineAsync();
                             if (line != null)
                                 await writer.WriteLineAsync(line);
                         }
