@@ -103,11 +103,8 @@ jobs:
             sudo apt-get install -y clang llvm binutils-aarch64-linux-gnu gcc-aarch64-linux-gnu zlib1g-dev:arm64
           fi
 
-      - name: Restore dependencies
-        run: dotnet restore src/RadioModBackend.NET.csproj
-
       - name: Publish
-        run: dotnet publish src/RadioModBackend.NET.csproj --configuration Release --no-restore --runtime ${{ matrix.rid }} --output publish/${{ matrix.rid }}-${{ matrix.optimization }} --verbosity minimal /p:OptimizationPreference=${{ matrix.optimization }} /p:DebugType=None
+        run: dotnet publish src/RadioModBackend.NET.csproj --configuration Release --runtime ${{ matrix.rid }} --output publish/${{ matrix.rid }}-${{ matrix.optimization }} --verbosity minimal /p:OptimizationPreference=${{ matrix.optimization }} /p:SelfContained=true /p:DebugType=None
 
       - name: Archive artifacts (Linux)
         if: runner.os == 'Linux'
