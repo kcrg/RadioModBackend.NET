@@ -88,7 +88,9 @@ public class SearchService(YoutubeClient youtubeClient, AppSettings appSettings,
                         while ((line = await process.StandardOutput.ReadLineAsync()) is not null)
                         {
                             if (line != null)
+                            {
                                 await writer.WriteLineAsync(line);
+                            }
                         }
                     }
 
